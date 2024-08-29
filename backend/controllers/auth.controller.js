@@ -10,9 +10,10 @@ import {
 } from '../mailtrap/email.js';
 
 export const signup = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, email, password } = req.body;
+
   try {
-    if (!email || !username || !password) {
+    if (!email || !name || !password) {
       throw new Error('All fields are required');
     }
     const userAlreadyExit = await User.findOne();
@@ -29,7 +30,7 @@ export const signup = async (req, res) => {
     const user = new User({
       email,
       password: hashedPassword,
-      username,
+      username: name,
       verificationToken,
       verificationTokenExpiredAt: Date.now() + 24 * 60 * 60 * 1000,
     });
